@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.vnedomovnyi.moviecompose.R
 import com.vnedomovnyi.moviecompose.ui.entity.Movie
-import org.threeten.bp.format.DateTimeFormatter
 
 @Composable
 fun MainScreen(viewModel: MainViewModel) {
@@ -38,7 +37,7 @@ fun MainScreen(viewModel: MainViewModel) {
 private fun MovieItem(movie: Movie) {
     Row {
         Image(
-            painter = rememberAsyncImagePainter(model = movie.smallImage),
+            painter = rememberAsyncImagePainter(model = movie.posterUrl),
             contentDescription = null,
             modifier = Modifier
                 .size(width = 95.dp, height = 120.dp)
@@ -53,16 +52,11 @@ private fun MovieItem(movie: Movie) {
 
             Spacer(Modifier.height(5.dp))
 
-            Text(stringResource(R.string.release_date), style = MaterialTheme.typography.h3)
+            Text(stringResource(R.string.release_year), style = MaterialTheme.typography.h3)
             Text(
-                movie.releaseDate.format(DateTimeFormatter.ISO_LOCAL_DATE),
+                movie.year.toString(),
                 style = MaterialTheme.typography.body1
             )
-
-            Spacer(Modifier.height(5.dp))
-
-            Text(stringResource(R.string.average_rating), style = MaterialTheme.typography.h3)
-            Text(String.format("%.1f", movie.rating), style = MaterialTheme.typography.body1)
         }
     }
 }
