@@ -10,7 +10,9 @@ import androidx.compose.ui.Modifier
 import com.vnedomovnyi.moviecompose.ui.screen.main.MainScreen
 import com.vnedomovnyi.moviecompose.ui.screen.main.MainViewModel
 import com.vnedomovnyi.moviecompose.ui.theme.MovieComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()

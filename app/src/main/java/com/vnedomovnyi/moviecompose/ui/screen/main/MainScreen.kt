@@ -54,7 +54,7 @@ private fun MovieItem(movie: Movie) {
 
             Text(stringResource(R.string.release_year), style = MaterialTheme.typography.h3)
             Text(
-                movie.year.toString(),
+                movie.year,
                 style = MaterialTheme.typography.body1
             )
         }

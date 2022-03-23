@@ -2,24 +2,24 @@ package com.vnedomovnyi.moviecompose.ui.screen.main
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.vnedomovnyi.moviecompose.entity.Movie
+import com.vnedomovnyi.moviecompose.network.MovieService
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    movieService: MovieService
+) : ViewModel() {
 
     val movies = mutableStateListOf<Movie>()
 
     init {
-        movies.addAll(MOCK_MOVIES)
-    }
-
-    companion object {
-        private val MOCK_MOVIE = Movie(
-            id = "",
-            title = "Spiderman No Way Home",
-            year = 1997,
-            posterUrl = "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg"
-        )
-
-        private val MOCK_MOVIES = Array(10) { MOCK_MOVIE }.toList()
+        viewModelScope.launch {
+            val response = movieService.getMovies("Test")
+            movies.addAll(response.movies)
+        }
     }
 }
