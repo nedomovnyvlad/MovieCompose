@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.vnedomovnyi.moviecompose.R
-import com.vnedomovnyi.moviecompose.ui.entity.Movie
+import com.vnedomovnyi.moviecompose.entity.Movie
 
 @Composable
 fun MainScreen(viewModel: MainViewModel) {

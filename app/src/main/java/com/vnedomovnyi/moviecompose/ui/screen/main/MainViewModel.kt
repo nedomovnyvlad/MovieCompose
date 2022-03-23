@@ -2,7 +2,7 @@ package com.vnedomovnyi.moviecompose.ui.screen.main
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
-import com.vnedomovnyi.moviecompose.ui.entity.Movie
+import com.vnedomovnyi.moviecompose.entity.Movie
 
 class MainViewModel : ViewModel() {
 

@@ -1,4 +1,4 @@
-package com.vnedomovnyi.moviecompose.ui.entity
+package com.vnedomovnyi.moviecompose.entity
 
 data class Movie(
     val id: String,
