@@ -1,6 +1,7 @@
 package com.vnedomovnyi.moviecompose.ui.screen.main
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,7 +17,7 @@ import com.vnedomovnyi.moviecompose.R
 import com.vnedomovnyi.moviecompose.entity.Movie
 
 @Composable
-fun MainScreen(viewModel: MainViewModel) {
+fun MainScreen(viewModel: MainViewModel, onMovieClick: (String) -> Unit) {
     LazyColumn(
         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 28.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp)
@@ -29,13 +30,18 @@ fun MainScreen(viewModel: MainViewModel) {
                 )
             }
         }
-        items(viewModel.movies) { movie -> MovieItem(movie) }
+        items(viewModel.movies) { movie ->
+            MovieItem(
+                movie = movie,
+                onClick = { id -> onMovieClick(id) }
+            )
+        }
     }
 }
 
 @Composable
-private fun MovieItem(movie: Movie) {
-    Row {
+private fun MovieItem(movie: Movie, onClick: (String) -> Unit) {
+    Row(modifier = Modifier.clickable { onClick(movie.id) }) {
         Image(
             painter = rememberAsyncImagePainter(model = movie.posterUrl),
             contentDescription = null,
