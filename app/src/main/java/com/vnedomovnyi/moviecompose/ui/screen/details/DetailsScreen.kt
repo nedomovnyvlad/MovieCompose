@@ -12,6 +12,8 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,12 +31,11 @@ import com.vnedomovnyi.moviecompose.ui.theme.Gallery
 
 @Composable
 fun DetailsScreen(viewModel: DetailsViewModel) {
-    val details = viewModel.movieDetails.value
+    val state by viewModel.state.collectAsState()
 
-    if (details == null) {
-        ProgressBar()
-    } else {
-        Content(details)
+    when {
+        state.isLoading -> ProgressBar()
+        state.details != null -> Content(state.details!!)
     }
 }
 
