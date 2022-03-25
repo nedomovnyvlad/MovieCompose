@@ -5,9 +5,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
@@ -16,27 +20,54 @@ import coil.compose.rememberAsyncImagePainter
 import com.vnedomovnyi.moviecompose.R
 import com.vnedomovnyi.moviecompose.entity.Movie
 
+private val screenPadding = PaddingValues(horizontal = 20.dp, vertical = 28.dp)
+
 @Composable
 fun MainScreen(viewModel: MainViewModel, onMovieClick: (String) -> Unit) {
+    val state by viewModel.state.collectAsState()
+
+    when {
+        state.isLoading -> ProgressBar()
+        state.movies.isNotEmpty() -> Content(movies = state.movies, onMovieClick = onMovieClick)
+    }
+}
+
+@Composable
+private fun ProgressBar() {
+    Column(modifier = Modifier.padding(screenPadding)) {
+        Title()
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+    }
+}
+
+@Composable
+private fun Content(movies: List<Movie>, onMovieClick: (String) -> Unit) {
     LazyColumn(
-        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 28.dp),
+        contentPadding = screenPadding,
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
-        item {
-            Column {
-                Text(
-                    stringResource(R.string.app_name),
-                    style = MaterialTheme.typography.h1
-                )
-            }
-        }
-        items(viewModel.movies) { movie ->
+        item { Title() }
+
+        items(movies) { movie ->
             MovieItem(
                 movie = movie,
                 onClick = { id -> onMovieClick(id) }
             )
         }
     }
+}
+
+@Composable
+private fun Title() {
+    Text(
+        stringResource(R.string.app_name),
+        style = MaterialTheme.typography.h1
+    )
 }
 
 @Composable
