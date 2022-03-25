@@ -17,7 +17,7 @@ fun MovieComposeTheme(content: @Composable () -> Unit) {
 
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = Bush,
+            color = Bunker,
         )
     }
 
