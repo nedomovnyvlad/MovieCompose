@@ -2,4 +2,8 @@
     <string name="app_name">MovieCompose</string>
     <string name="title">Title:</string>
     <string name="release_year">Release Year:</string>
+    <string name="plot">Plot:</string>
+    <string name="release_date">Release Date:</string>
+    <string name="average_rating">Average Rating:</string>
+    <string name="rate_count">Rate count:</string>
 </resources>

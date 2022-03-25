@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
     private fun Content() {
         MovieComposeTheme {
             Surface(modifier = Modifier.fillMaxSize()) {
-                MovieComposeNavHost(this)
+                MovieComposeNavHost()
             }
         }
     }
