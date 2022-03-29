@@ -21,14 +21,21 @@ import coil.compose.rememberAsyncImagePainter
 import com.vnedomovnyi.moviecompose.R
 import com.vnedomovnyi.moviecompose.entity.Movie
 
+private val verticalMargin = 20.dp
+private val horizontalMargin = 20.dp
+
 @Composable
 fun MainScreen(viewModel: MainViewModel, onMovieClick: (String) -> Unit) {
     val state by viewModel.state.collectAsState()
 
-    Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 28.dp)) {
-        Title()
-        Spacer(modifier = Modifier.height(16.dp))
-        SearchView(onTextChanged = { viewModel.onSearchTextChanged(it) })
+    Column {
+        Column(Modifier.padding(horizontal = horizontalMargin)) {
+            Spacer(modifier = Modifier.height(verticalMargin))
+            Title()
+            Spacer(modifier = Modifier.height(16.dp))
+            SearchView(onTextChanged = { viewModel.onSearchTextChanged(it) })
+            Spacer(modifier = Modifier.height(8.dp))
+        }
 
         with(state) {
             when {
@@ -77,8 +84,9 @@ private fun Content(
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(20.dp),
+        contentPadding = PaddingValues(horizontal = horizontalMargin)
     ) {
-        item { Spacer(modifier = Modifier.height(12.dp)) }
+        item { Spacer(modifier = Modifier.height(8.dp)) }
 
         items(movies) { movie ->
             MovieItem(
@@ -86,6 +94,8 @@ private fun Content(
                 onClick = { id -> onMovieClick(id) }
             )
         }
+
+        item { Spacer(modifier = Modifier.height(verticalMargin)) }
     }
 }
 
