@@ -9,6 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -17,10 +18,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 class NetworkModule {
 
     @Provides
-    fun provideOkHttpClient() =
+    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor) =
         OkHttpClient.Builder()
             .addInterceptor(ApiKeyInterceptor())
+            .addInterceptor(httpLoggingInterceptor)
             .build()
+
+    @Provides
+    fun provideHttpLoggingInterceptor() =
+        HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT).apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
 
     @Provides
     fun provideGson() = Gson()
