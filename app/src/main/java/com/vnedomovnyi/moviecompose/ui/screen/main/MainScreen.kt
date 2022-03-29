@@ -2,24 +2,34 @@ package com.vnedomovnyi.moviecompose.ui.screen.main
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.Transparent
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.vnedomovnyi.moviecompose.R
 import com.vnedomovnyi.moviecompose.entity.Movie
+import com.vnedomovnyi.moviecompose.ui.theme.BrightGray
+import com.vnedomovnyi.moviecompose.ui.theme.Gallery
 
 private val verticalMargin = 20.dp
 private val horizontalMargin = 20.dp
@@ -116,25 +126,55 @@ fun SearchView(onTextChanged: (String) -> Unit) {
     }
 }
 
+@Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchTextField(onTextChanged: (String) -> Unit) {
     var text by rememberSaveable { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
-    TextField(
-        modifier = Modifier.fillMaxWidth(),
-        textStyle = MaterialTheme.typography.body1.copy(fontSize = 14.sp),
-        placeholder = { Text(stringResource(R.string.search_movie)) },
-        shape = MaterialTheme.shapes.large,
-        colors = TextFieldDefaults.textFieldColors(
-            focusedIndicatorColor = Transparent,
-            unfocusedIndicatorColor = Transparent,
-        ),
-        value = text,
-        onValueChange = {
-            text = it
-            onTextChanged(it)
-        },
-    )
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.height(56.dp)) {
+        TextField(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight(),
+            textStyle = MaterialTheme.typography.body1.copy(
+                fontSize = 14.sp,
+            ),
+            placeholder = { Text(stringResource(R.string.search_movie)) },
+            shape = MaterialTheme.shapes.large,
+            colors = TextFieldDefaults.textFieldColors(
+                focusedIndicatorColor = Transparent,
+                unfocusedIndicatorColor = Transparent,
+                backgroundColor = BrightGray,
+            ),
+            singleLine = true,
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
+            keyboardActions = KeyboardActions(onSearch = { keyboardController?.hide() }),
+            value = text,
+            onValueChange = {
+                text = it
+                onTextChanged(it)
+            },
+        )
+
+        Spacer(modifier = Modifier.width(12.dp))
+
+        IconButton(
+            onClick = { keyboardController?.hide() },
+            modifier = Modifier
+                .clip(MaterialTheme.shapes.large)
+                .background(BrightGray)
+                .fillMaxHeight()
+                .aspectRatio(1f)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Search,
+                contentDescription = null,
+                tint = Gallery,
+            )
+        }
+    }
 }
 
 @Composable
