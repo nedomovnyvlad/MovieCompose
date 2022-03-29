@@ -19,6 +19,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.Transparent
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -183,6 +184,7 @@ private fun MovieItem(movie: Movie, onClick: (String) -> Unit) {
         Image(
             painter = rememberAsyncImagePainter(model = movie.posterUrl),
             contentDescription = null,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(width = 95.dp, height = 120.dp)
                 .clip(MaterialTheme.shapes.large)
