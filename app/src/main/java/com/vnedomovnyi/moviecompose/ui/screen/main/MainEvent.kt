@@ -5,4 +5,6 @@ import com.vnedomovnyi.moviecompose.ui.mvi.BaseUiEvent
 
 sealed class MainEvent : BaseUiEvent {
     data class MoviesLoaded(val movies: List<Movie>) : MainEvent()
+    object LoadingStarted : MainEvent()
+    data class SearchQueryChanged(val query: String) : MainEvent()
 }

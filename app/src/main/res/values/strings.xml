@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">MovieCompose</string>
+    <string name="find_movie">Find your movies</string>
+    <string name="search_movie">Search Here …</string>
+    <string name="call_to_search">Search the movie\nyou want 👆</string>
+    <string name="no_results">We weren\'t able\nto find you movie 😔</string>
     <string name="title">Title:</string>
     <string name="release_year">Release Year:</string>
     <string name="plot">Plot:</string>

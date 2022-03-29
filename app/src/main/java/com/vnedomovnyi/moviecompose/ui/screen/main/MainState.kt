@@ -6,11 +6,13 @@ import com.vnedomovnyi.moviecompose.ui.mvi.BaseState
 data class MainState(
     val isLoading: Boolean,
     val movies: List<Movie>,
+    val isSearching: Boolean,
 ) : BaseState {
     companion object {
         fun initial(): MainState = MainState(
-            isLoading = true,
-            movies = emptyList()
+            isLoading = false,
+            movies = emptyList(),
+            isSearching = false,
         )
     }
 }
